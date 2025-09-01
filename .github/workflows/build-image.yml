@@ -41,7 +41,19 @@ jobs:
           chmod +x pi-gen-sunscan/01-prepare-repo/00-run.sh
           sudo apt-get update
           sudo apt-get install -y debian-archive-keyring
-
+          
+      - name: Inject stage0 keyring script
+        run: |
+          mkdir -p stage0/00-install-keys
+          cat > stage0/00-install-keys/00-run.sh << 'EOF'
+          #!/bin/bash -e
+          on_chroot << EOC
+          apt-get update
+          apt-get install -y --no-install-recommends debian-archive-keyring
+          EOC
+          EOF
+          chmod +x stage0/00-install-keys/00-run.sh
+          
       - uses: usimd/pi-gen-action@v1
         id: build
         with:
