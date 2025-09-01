@@ -39,6 +39,8 @@ jobs:
           EOF
           } &&
           chmod +x pi-gen-sunscan/01-prepare-repo/00-run.sh
+          sudo apt-get update
+          sudo apt-get install -y debian-archive-keyring
 
       - uses: usimd/pi-gen-action@v1
         id: build
